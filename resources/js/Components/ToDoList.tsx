@@ -49,7 +49,7 @@ export default function TodoList() {
                 />
                 <button
                     onClick={addTodo}
-                    className="bg-blue-500 text-white px-3 py-1 rounded text-sm hover:bg-blue-600"
+                    className="bg-lifeTrack-dark text-white px-3 py-1 rounded text-sm hover:bg-lifeTrack-primary"
                 >
                     Add
                 </button>
