@@ -1,6 +1,8 @@
 import {
     Home,
     Activity,
+    Volleyball,
+    Dumbbell,
     LandPlot,
     DollarSign,
     Moon,
@@ -8,6 +10,7 @@ import {
     Calendar,
     StickyNote,
     Briefcase,
+    Footprints,
     LayoutDashboard,
 } from "lucide-react";
 import { ReactNode } from "react";
@@ -15,7 +18,7 @@ import { ReactNode } from "react";
 export interface SidebarItem {
     label: string;
     icon?: ReactNode;
-    route?: string; // Named Laravel route
+    route?: string;
     children?: SidebarItem[];
 }
 
@@ -23,15 +26,19 @@ export const sidebarItems: SidebarItem[] = [
     {
         label: "Home",
         route: "dashboard",
-        icon: <Home className="w-5 h-5 text-lifeTrack-primary" />,
+        icon: <Home className="w-5 h-5" />,
     },
     {
         label: "Active",
         icon: <Activity className="w-5 h-5" />,
         children: [
-            { label: "Running", route: "active.running" },
-            { label: "Weights", route: "active.lifting" },
-            { label: "Hoops", route: "active.basketball" },
+            { label: "Running", route: "active.running", icon: <Footprints /> },
+            { label: "Weights", route: "active.lifting", icon: <Dumbbell /> },
+            {
+                label: "Hoops",
+                route: "active.basketball",
+                icon: <Volleyball />,
+            },
         ],
     },
     { label: "Golf", route: "golf", icon: <LandPlot className="w-5 h-5" /> },
