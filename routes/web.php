@@ -67,7 +67,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('job-tracking');
 
     Route::get('/project-overview', function () {
-    return Inertia::render('Trackers/ProjectOverview');
+    return Inertia::render('Project/ProjectOverview');
     })->name('project-overview');   
 
 });
