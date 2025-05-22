@@ -1,16 +1,3 @@
-interface GolfRound {
-    id: number;
-    date: string;
-    score: number;
-    notes?: string;
-    course?: string;
-    greens_in_regulation?: number;
-    fairways_in_regulation?: number;
-    course_rating?: number;
-    course_slope?: number;
-    yardage?: number;
-}
-
 import { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -18,8 +5,13 @@ interface GolfRound {
     id: number;
     date: string;
     score: number;
-    notes?: string;
     course?: string;
+    notes?: string;
+    greens_in_regulation?: number;
+    fairways_in_regulation?: number;
+    course_rating?: number;
+    course_slope?: number;
+    yardage?: number;
 }
 
 export default function LastGolfRoundWidget() {
@@ -34,39 +26,67 @@ export default function LastGolfRoundWidget() {
             .catch(() => setRound(null));
     }, []);
 
-    if (!round) {
-        return (
-            <div>
-                <h3 className="text-sm text-gray-500 mb-1">Last Golf Round</h3>
-                <p className="text-gray-400 italic">No rounds logged yet</p>
-            </div>
-        );
-    }
-
     return (
-        <div>
-            <h3 className="text-sm text-gray-500 mb-1">Last Golf Round</h3>
-            <div className="space-y-1 text-sm">
-                <p>
-                    <span className="font-semibold">Date:</span>{" "}
-                    {new Date(round.date).toLocaleDateString()}
+        <div className="bg-white shadow-md rounded p-4 mb-6 border-l-4 border-lifeTrack-primary">
+            <h3 className="text-sm text-gray-500 mb-1">Last Round</h3>
+            {!round ? (
+                <p className="text-gray-400 italic text-sm">
+                    No rounds logged yet
                 </p>
-                <p>
-                    <span className="font-semibold">Score:</span> {round.score}
-                </p>
-                {round.course && (
+            ) : (
+                <div className="space-y-1 text-sm text-gray-700">
                     <p>
-                        <span className="font-semibold">Course:</span>{" "}
-                        {round.course}
+                        <span className="font-semibold">Date:</span>{" "}
+                        {new Date(round.date).toLocaleDateString()}
                     </p>
-                )}
-                {round.notes && (
                     <p>
-                        <span className="font-semibold">Notes:</span>{" "}
-                        {round.notes}
+                        <span className="font-semibold">Score:</span>{" "}
+                        {round.score}
                     </p>
-                )}
-            </div>
+                    {round.course && (
+                        <p>
+                            <span className="font-semibold">Course:</span>{" "}
+                            {round.course}
+                        </p>
+                    )}
+                    {round.greens_in_regulation !== undefined && (
+                        <p>
+                            <span className="font-semibold">GIR:</span>{" "}
+                            {round.greens_in_regulation}/18
+                        </p>
+                    )}
+                    {round.fairways_in_regulation !== undefined && (
+                        <p>
+                            <span className="font-semibold">FIR:</span>{" "}
+                            {round.fairways_in_regulation}/14
+                        </p>
+                    )}
+                    {round.course_rating && (
+                        <p>
+                            <span className="font-semibold">Rating:</span>{" "}
+                            {round.course_rating}
+                        </p>
+                    )}
+                    {round.course_slope && (
+                        <p>
+                            <span className="font-semibold">Slope:</span>{" "}
+                            {round.course_slope}
+                        </p>
+                    )}
+                    {round.yardage && (
+                        <p>
+                            <span className="font-semibold">Yardage:</span>{" "}
+                            {round.yardage} yds
+                        </p>
+                    )}
+                    {round.notes && (
+                        <p>
+                            <span className="font-semibold">Notes:</span>{" "}
+                            {round.notes}
+                        </p>
+                    )}
+                </div>
+            )}
         </div>
     );
 }
