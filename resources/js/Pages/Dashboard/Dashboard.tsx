@@ -4,6 +4,7 @@ import { Head } from "@inertiajs/react";
 import QuoteOfTheDay from "./QuoteOfTheDay";
 import TodayRunWidget from "./TodayRunWidget";
 import DashboardCard from "./DashboardCard";
+import LastGolfRoundWidget from "../Golf/LastGolfRoundWidget";
 
 export default function Dashboard() {
     return (
@@ -17,7 +18,7 @@ export default function Dashboard() {
                         <TodayRunWidget />
                     </DashboardCard>
                     <DashboardCard>
-                        <TodayRunWidget />
+                        <LastGolfRoundWidget />
                     </DashboardCard>
                     <DashboardCard>
                         <TodayRunWidget />

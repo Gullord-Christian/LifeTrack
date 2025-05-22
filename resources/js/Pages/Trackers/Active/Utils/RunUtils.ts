@@ -65,8 +65,8 @@ export function getZone(avgHr: number): {
     if (avgHr >= 112)
         return { zone: 2, label: "Base", color: "bg-blue-100 text-blue-700" };
     if (avgHr >= 92)
-        return { zone: 1, label: "Low", color: "bg-gray-100 text-gray-700" };
-    return { zone: 0, label: "N/A", color: "bg-gray-50 text-gray-400" };
+        return { zone: 1, label: "Low", color: "bg-gray-200 text-gray-700" };
+    return { zone: 0, label: "N/A", color: "bg- text-gray-400" };
 }
 
 export function getMileageSummary(runs: RunEntry[]) {

@@ -7,7 +7,7 @@ export default function DashboardCard({
 }) {
     return (
         <div
-            className={`bg-white shadow-md rounded p-4 border border-gray-200 ${className}`}
+            className={`bg-white shadow-md rounded p-6 border border-gray-200 ${className}`}
         >
             {children}
         </div>

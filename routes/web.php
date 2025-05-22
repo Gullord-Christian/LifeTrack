@@ -39,7 +39,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 
     Route::get('/golf', function () {
-        return Inertia::render('Trackers/Golf');
+        return Inertia::render('Golf/Golf');
     })->name('golf');
 
     Route::get('/budgeting', function () {
