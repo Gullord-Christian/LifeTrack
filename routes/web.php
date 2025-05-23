@@ -51,7 +51,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('sleep');
 
     Route::get('/habits', function () {
-        return Inertia::render('Trackers/Habits');
+        return Inertia::render('Habits/Habits');
     })->name('habits');
 
     Route::get('/calendar', function () {
