@@ -38,9 +38,9 @@ export default function Habits() {
                     <h1 className="text-2xl font-bold">🧠 Habits Tracker</h1>
                     <button
                         onClick={() => setShowForm(true)}
-                        className="bg-lifeTrack-primary text-white px-4 py-2 rounded hover:bg-lifeTrack-light transition"
+                        className="bg-lifeTrack-dark text-white px-4 py-2 rounded hover:bg-lifeTrack-primary transition"
                     >
-                        + New Habit
+                        New Habit
                     </button>
                 </div>
 
