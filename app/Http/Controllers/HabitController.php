@@ -14,28 +14,28 @@ class HabitController extends Controller
      */
      public function index()
     {
-        // TEMP: Get all habits (in production you'd filter by user)
-        $habits = Habit::all();
+        $habits = Habit::with('completions')->get(); 
+
 
         return inertia('/Habits/Habits', compact('habits'));
     }
 
-    public function store(Request $request)
-    {
-        $data = $request->validate([
-            'name' => 'required|string|max:255',
-            'frequency' => 'required|in:daily,weekly',
-            'notes' => 'nullable|string',
-            'start_date' => 'required|date',
-        ]);
+public function store(Request $request)
+{
+    $data = $request->validate([
+        'name' => 'required|string|max:255',
+        'frequency' => 'required|in:daily,weekly',
+        'start_date' => 'required|date',
+        'notes' => 'nullable|string',
+    ]);
 
-        // TEMP: Hardcoded user_id until auth is added
-        $data['user_id'] = 1;
+    $data['user_id'] = 2; // TEMP: hardcode for testing
 
-        $habit = Habit::create($data);
+    Habit::create($data);
 
-        return redirect()->route('habits.index');
-    }
+    return response()->json(['message' => 'Habit created.'], 201);
+}
+
 
     public function show(string $id)
     {

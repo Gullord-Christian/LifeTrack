@@ -5,8 +5,8 @@ import {
 } from "./HabitUtils";
 
 export default function HabitCard({ habit }: { habit: Habit }) {
-    const active = isStreakActive(habit.lastCompleted, habit.frequency);
-    const daysSince = getDaysSinceLastCompletion(habit.lastCompleted);
+    const active = isStreakActive(habit.last_completed_at, habit.frequency);
+    const daysSince = getDaysSinceLastCompletion(habit.last_completed_at);
 
     return (
         <div className="bg-white border rounded p-4 shadow-sm">

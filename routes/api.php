@@ -3,6 +3,8 @@
 use App\Http\Controllers\RunController;
 use App\Http\Controllers\BudgetEntryController;
 use App\Http\Controllers\GolfRoundController;
+use App\Http\Controllers\HabitCompletionController;
+use App\Http\Controllers\HabitController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Http;
 use App\Models\Run;
@@ -38,3 +40,8 @@ Route::get('/golf', [GolfRoundController::class, 'index']);
 Route::get('/budget', [BudgetEntryController::class, 'index']);
 Route::post('/budget', [BudgetEntryController::class, 'store']);
 Route::delete('/budget/{budgetEntry}', [BudgetEntryController::class, 'destroy']);
+
+// Habits
+Route::resource('habits', HabitController::class);
+Route::post('/habits/{habit}/complete', [HabitCompletionController::class, 'store']);
+Route::delete('/habits/{habit}/complete', [HabitCompletionController::class, 'destroy'])->name('habits.uncomplete');

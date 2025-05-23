@@ -6,8 +6,23 @@ export interface User {
     email: string;
 }
 
+export interface Habit {
+    id: number;
+    name: string;
+    notes?: string;
+    frequency: "daily" | "weekly";
+    start_date: string;
+    streak: number;
+    last_completed_at: string | null;
+}
+
 export interface PageProps extends InertiaPageProps {
-    auth: {
-        user: User;
+    habits?: Habit[];
+    auth?: {
+        user: {
+            id: number;
+            name: string;
+            email: string;
+        };
     };
 }

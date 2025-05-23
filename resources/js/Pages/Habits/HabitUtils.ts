@@ -1,11 +1,15 @@
+export interface Completion {
+    completed_date: string;
+}
+
 export interface Habit {
     id: number;
     name: string;
-    notes?: string;
     frequency: "daily" | "weekly";
-    lastCompleted: string | null; // ISO date
+    notes?: string;
     streak: number;
-    createdAt: string;
+    last_completed_at: string | null;
+    completions?: Completion[];
 }
 
 export function getDaysSinceLastCompletion(date: string | null): number {
@@ -24,4 +28,14 @@ export function isStreakActive(
     if (frequency === "daily") return days <= 1;
     if (frequency === "weekly") return days <= 7;
     return false;
+}
+
+// HabitUtils.ts
+
+export function getDaysSince(dateString: string | null): number {
+    if (!dateString) return 0;
+    const then = new Date(dateString);
+    const now = new Date();
+    const diff = now.getTime() - then.getTime();
+    return Math.floor(diff / (1000 * 60 * 60 * 24));
 }
