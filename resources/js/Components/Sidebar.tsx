@@ -75,7 +75,7 @@ export default function Sidebar({ collapsed }: { collapsed: boolean }) {
                                 title={collapsed ? item.label : undefined}
                             >
                                 {collapsed ? (
-                                    <span className="w-5 h-5 flex items-center justify-center">
+                                    <span className="w-8 h-8 flex items-center justify-center mx-1">
                                         {item.icon}
                                     </span>
                                 ) : (
@@ -91,7 +91,7 @@ export default function Sidebar({ collapsed }: { collapsed: boolean }) {
                             </button>
 
                             {collapsed && openPopupGroup === item.label && (
-                                <div className="ml-6 mt-1 space-y-1">
+                                <div className="ml-8 mt-1 space-y-1">
                                     {item.children.map((child) => (
                                         <SidebarLink
                                             key={child.label}

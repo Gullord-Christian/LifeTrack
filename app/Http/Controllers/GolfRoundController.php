@@ -5,11 +5,18 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\GolfRound;
 
-class RunController extends Controller
+class GolfRoundController extends Controller
 {
-    public function index() {
 
+        public function index()
+    {
+        return \App\Models\GolfRound::orderByDesc('date')->get();
     }
+    
+    public function last()
+    {
+        return GolfRound::orderByDesc('date')->first();
+    }   
 
     public function store(Request $request)
 {
@@ -27,6 +34,12 @@ class RunController extends Controller
 
     return GolfRound::create($validated);
 }
+
+    public function destroy(GolfRound $golfRound)
+    {
+        $golfRound->delete();
+        return response()->noContent();
+    }
 
    
 }

@@ -21,7 +21,7 @@ export default function AuthenticatedLayout({ children }: PropsWithChildren) {
             {/* Sidebar */}
             <div
                 className={`transition-all duration-300 ease-in-out bg-white border-r shadow-md ${
-                    collapsed ? "w-16" : "w-64"
+                    collapsed ? "w-20" : "w-64"
                 } flex flex-col`}
             >
                 <div

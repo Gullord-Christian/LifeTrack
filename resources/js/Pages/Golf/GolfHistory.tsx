@@ -1,5 +1,7 @@
+import { useState } from "react";
 import { GolfEntry } from "./GolfUtils";
 import { Trash2 } from "lucide-react";
+import DeleteConfirmModal from "@/Components/DeleteConfirmationModal";
 
 export default function GolfHistory({
     rounds,
@@ -8,6 +10,16 @@ export default function GolfHistory({
     rounds: GolfEntry[];
     onDelete: (id: number) => void;
 }) {
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [deleteID, setDeleteID] = useState<number | null>(null);
+
+    const handleConfirmDelete = () => {
+        if (deleteID !== null) {
+            onDelete(deleteID);
+            setDeleteID(null);
+        }
+    };
+
     if (rounds.length === 0) {
         return (
             <p className="mt-6 text-gray-500 text-sm italic">
@@ -18,9 +30,7 @@ export default function GolfHistory({
 
     return (
         <div className="mt-6">
-            <h2 className="text-lg font-semibold mb-2">
-                ⛳ Golf Round History
-            </h2>
+            <h2 className="text-lg font-semibold mb-2">Golf Round History</h2>
             <table className="w-full text-sm border border-gray-200">
                 <thead className="bg-gray-100 text-left">
                     <tr>
@@ -59,19 +69,30 @@ export default function GolfHistory({
                                 {round.notes || "-"}
                             </td>
                             <td className="p-2 border text-center">
-                                {round.id && (
-                                    <button
-                                        onClick={() => onDelete(round.id!)}
-                                        className="text-red-500 hover:text-red-700"
-                                    >
-                                        <Trash2 className="w-4 h-4" />
-                                    </button>
-                                )}
+                                <button
+                                    onClick={() => {
+                                        setDeleteID(round.id!);
+                                        setShowDeleteModal(true);
+                                    }}
+                                    className="text-red-500 hover:text-red-700"
+                                >
+                                    <Trash2 className="w-4 h-4" />
+                                </button>
                             </td>
                         </tr>
                     ))}
                 </tbody>
             </table>
+
+            <DeleteConfirmModal
+                show={showDeleteModal}
+                onClose={() => {
+                    setShowDeleteModal(false);
+                    setDeleteID(null);
+                }}
+                onConfirm={handleConfirmDelete}
+                itemLabel="this golf round"
+            />
         </div>
     );
 }

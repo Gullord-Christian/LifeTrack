@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\RunController;
+use App\Http\Controllers\BudgetEntryController;
+use App\Http\Controllers\GolfRoundController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Http;
 use App\Models\Run;
@@ -23,3 +25,16 @@ Route::get('/runs', [RunController::class, 'index']);
 Route::post('/runs', [RunController::class, 'store']);
 Route::put('/runs/{run}', [RunController::class, 'update']);
 Route::delete('/runs/{run}', [RunController::class, 'destroy']);
+
+
+// Golf Tracker
+Route::get('/golf/last', [GolfRoundController::class, 'last']);
+Route::post('/golf', [GolfRoundController::class, 'store']);
+Route::delete('/golf/{golfRound}', [GolfRoundController::class, 'destroy']);
+Route::get('/golf', [GolfRoundController::class, 'index']);
+
+
+// Budget
+Route::get('/budget', [BudgetEntryController::class, 'index']);
+Route::post('/budget', [BudgetEntryController::class, 'store']);
+Route::delete('/budget/{budgetEntry}', [BudgetEntryController::class, 'destroy']);

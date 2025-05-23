@@ -43,7 +43,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('golf');
 
     Route::get('/budgeting', function () {
-        return Inertia::render('Trackers/Budgeting');
+        return Inertia::render('Budget/Budget');
     })->name('budgeting');
 
     Route::get('/sleep', function () {
@@ -69,6 +69,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/project-overview', function () {
     return Inertia::render('Project/ProjectOverview');
     })->name('project-overview');   
+
+    
 
 });
 

@@ -14,6 +14,8 @@ import GolfPBCard from "./GolfPBCard";
 export default function GolfPage() {
     const [showModal, setShowModal] = useState(false);
     const [rounds, setRounds] = useState<GolfEntry[]>([]);
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [deleteID, setDeleteID] = useState<number | null>(null);
 
     const addRound = (round: GolfEntry) => {
         api.post("/golf", round).then((res) => {
@@ -22,7 +24,6 @@ export default function GolfPage() {
     };
 
     const handleDelete = async (id: number) => {
-        if (!confirm("Delete this round?")) return;
         await api.delete(`/golf/${id}`);
         setRounds((prev) => prev.filter((r) => r.id !== id));
     };

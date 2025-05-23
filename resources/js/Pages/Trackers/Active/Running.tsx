@@ -30,7 +30,6 @@ export default function Running() {
     }, []);
 
     const handleDelete = async (id: number) => {
-        if (!confirm("Are you sure you want to delete this run?")) return;
         try {
             await api.delete(`/runs/${id}`);
             setRuns((prev) => prev.filter((run) => run.id !== id));

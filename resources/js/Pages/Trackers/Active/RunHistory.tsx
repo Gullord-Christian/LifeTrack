@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
     RunEntry,
     getZone,
@@ -6,6 +7,7 @@ import {
     formatPaceDisplay,
 } from "./Utils/RunUtils";
 import { Trash2 } from "lucide-react";
+import DeleteConfirmationModal from "@/Components/DeleteConfirmationModal";
 
 export default function RunHistory({
     runs,
@@ -14,6 +16,16 @@ export default function RunHistory({
     runs: RunEntry[];
     onDelete: (id: number) => void;
 }) {
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [deleteID, setDeleteID] = useState<number | null>(null);
+
+    const handleConfirmDelete = () => {
+        if (deleteID !== null) {
+            onDelete(deleteID);
+            setDeleteID(null);
+        }
+    };
+
     if (runs.length === 0) {
         return (
             <div className="mt-6 text-gray-500 text-sm italic">
@@ -53,7 +65,6 @@ export default function RunHistory({
                                 <td className="p-2 border">
                                     {parseFloat(run.distance).toFixed(2)}
                                 </td>
-
                                 <td className="p-2 border">
                                     {formatDuration(run.duration)}
                                 </td>
@@ -69,21 +80,32 @@ export default function RunHistory({
                                     {run.notes || "-"}
                                 </td>
                                 <td className="p-2 border text-center">
-                                    {run.id !== undefined && (
-                                        <button
-                                            onClick={() => onDelete(run.id!)}
-                                            className="text-red-500 hover:text-red-700"
-                                            title="Delete run"
-                                        >
-                                            <Trash2 className="w-4 h-4" />
-                                        </button>
-                                    )}
+                                    <button
+                                        onClick={() => {
+                                            setDeleteID(run.id!);
+                                            setShowDeleteModal(true);
+                                        }}
+                                        className="text-red-500 hover:text-red-700"
+                                        title="Delete run"
+                                    >
+                                        <Trash2 className="w-4 h-4" />
+                                    </button>
                                 </td>
                             </tr>
                         );
                     })}
                 </tbody>
             </table>
+
+            <DeleteConfirmationModal
+                show={showDeleteModal}
+                onClose={() => {
+                    setShowDeleteModal(false);
+                    setDeleteID(null);
+                }}
+                onConfirm={handleConfirmDelete}
+                itemLabel="this run"
+            />
         </div>
     );
 }
