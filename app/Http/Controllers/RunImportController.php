@@ -35,7 +35,7 @@ class RunImportController extends Controller
                     'duration_minutes' => $data['duration_minutes'] ?? 0,
                     'duration_seconds' => $data['duration_seconds'] ?? 0,
                     'distance' => $data['distance'],
-                    'avg_hr' => $data['avghr'] ?? null,
+                    'avg_hr' => $data['avg_hr'] ?? null,
                     'notes' => $data['notes'] ?? 'CSV import',
                 ]);
             }

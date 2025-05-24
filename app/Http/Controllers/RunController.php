@@ -16,6 +16,14 @@ class RunController extends Controller
         return response()->json($runs);
     }
 
+    public function yesterday()
+    {
+        $run = Run::whereDate('date', now()->subDay()->toDateString())->first();
+
+        return response()->json($run);
+    }
+
+
     public function store(Request $request)
     {
         $validated = $request->validate([

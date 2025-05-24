@@ -21,9 +21,8 @@ Route::get('/quote-of-the-day', function () {
     return response()->json($response->json());
 });
 
-Route::get('/runs/today', function () {
-    return Run::whereDate('date', Carbon::today())->first();
-});
+Route::get('/runs/yesterday', [RunController::class, 'yesterday']);
+
 
 // Run  Tracker
 Route::get('/runs', [RunController::class, 'index']);

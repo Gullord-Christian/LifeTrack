@@ -22,7 +22,7 @@ export default function TodayRunWidget() {
 
     useEffect(() => {
         axios
-            .get("/api/runs/today")
+            .get("/api/runs/yesterday")
             .then((res) => {
                 if (res.data) setRun(res.data);
             })
@@ -34,7 +34,7 @@ export default function TodayRunWidget() {
     if (!run) {
         return (
             <div className="bg-white shadow-md rounded p-4 mb-6 border-l-4 border-lifeTrack-primary">
-                <h3 className="text-sm text-gray-500 mb-1">Today's Run</h3>
+                <h3 className="text-sm text-gray-500 mb-1">Last Run</h3>
                 <p className="text-gray-400 italic">No run logged today</p>
             </div>
         );
@@ -50,8 +50,11 @@ export default function TodayRunWidget() {
 
     return (
         <div className="bg-white shadow-md rounded p-4 mb-6 border-l-4 border-lifeTrack-primary">
-            <h3 className="text-sm text-gray-500 mb-1">Today's Run</h3>
+            <h3 className="text-sm text-gray-500 mb-1">Last Run</h3>
             <div className="space-y-1 text-sm">
+                <p>
+                    <span className="font-semibold">Date:</span> {run.date}
+                </p>
                 <p>
                     <span className="font-semibold">Distance:</span>{" "}
                     {run.distance} mi

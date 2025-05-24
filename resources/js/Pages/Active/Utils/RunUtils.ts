@@ -6,7 +6,7 @@ export interface RunEntry {
         seconds: number;
     };
     distance: string;
-    avgHr: string;
+    avgHr: number;
     notes: string;
 }
 

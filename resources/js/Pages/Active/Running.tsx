@@ -10,6 +10,7 @@ import { RunEntry } from "./Utils/RunUtils";
 import { getMileageSummary } from "./Utils/RunUtils";
 import api from "@/lib/api";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 function FileUploadModal({
     show,
@@ -90,26 +91,27 @@ export default function Running() {
         formData.append("file", file);
 
         try {
-            const res = await axios.post("/runs/import", formData, {
+            await axios.post("/api/runs/import", formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                     Accept: "application/json",
                 },
             });
-
-            alert("File uploaded!");
-            // optionally refresh your run list
-        } catch (error) {
-            console.error(error);
-            alert("Upload failed.");
+            toast.success("CSV imported!");
+            refreshRuns();
+        } catch (err) {
+            console.error(err);
+            toast.error("Upload failed.");
         }
     };
+
     const handleDelete = async (id: number) => {
         try {
             await api.delete(`/runs/${id}`);
+            toast.success("Run deleted!");
             setRuns((prev) => prev.filter((run) => run.id !== id));
         } catch (err) {
-            alert("Failed to delete run.");
+            toast.error("Failed to delete run.");
             console.error(err);
         }
     };
@@ -140,7 +142,7 @@ export default function Running() {
                             </button>
                             <button
                                 onClick={() => setShowUploadModal(true)}
-                                className="flex items-center gap-2 bg-green-700 text-white px-4 py-2 rounded hover:bg-green-600 transition"
+                                className="flex items-center gap-2 bg-lifeTrack-primary text-white px-4 py-2 rounded hover:bg-lifeTrack-lightest transition hover:text-lifeTrack-dark"
                             >
                                 <Upload className="w-5 h-5" />
                                 Import CSV
