@@ -1,18 +1,16 @@
 <?php
 
-use App\Http\Controllers\RunController;
 use App\Http\Controllers\BudgetEntryController;
 use App\Http\Controllers\GolfRoundController;
 use App\Http\Controllers\HabitCompletionController;
 use App\Http\Controllers\HabitController;
 use App\Http\Controllers\JobController;
+use App\Http\Controllers\RunController;
 use App\Http\Controllers\RunImportController;
 
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Http;
 use App\Models\Run;
-use Carbon\Carbon;
-
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Route;
 
 // Dashboard
 Route::get('/quote-of-the-day', function () {
@@ -23,20 +21,17 @@ Route::get('/quote-of-the-day', function () {
 
 Route::get('/runs/yesterday', [RunController::class, 'yesterday']);
 
-
 // Run  Tracker
 Route::get('/runs', [RunController::class, 'index']);
 Route::post('/runs', [RunController::class, 'store']);
 Route::put('/runs/{run}', [RunController::class, 'update']);
 Route::delete('/runs/{run}', [RunController::class, 'destroy']);
 
-
 // Golf Tracker
 Route::get('/golf/last', [GolfRoundController::class, 'last']);
 Route::post('/golf', [GolfRoundController::class, 'store']);
 Route::delete('/golf/{golfRound}', [GolfRoundController::class, 'destroy']);
 Route::get('/golf', [GolfRoundController::class, 'index']);
-
 
 // Budget
 Route::get('/budget', [BudgetEntryController::class, 'index']);

@@ -1,47 +1,39 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { getOverUnderStyleAndText } from "./GolfUtils";
+import { GolfEntry, getOverUnderStyleAndText } from "./GolfUtils";
 
-interface GolfRound {
-    id: number;
-    date: string;
-    score: number;
-    course?: string;
-    notes?: string;
-    greens_in_regulation?: number;
-    fairways_in_regulation?: number;
-    course_rating?: number;
-    course_slope?: number;
-    yardage?: number;
-    par: string;
-    putts?: number;
+export interface GolfRoundSummaryProps {
+    title: string;
+    round: {
+        date: string;
+        score: number;
+        course?: string;
+        notes?: string;
+        greens_in_regulation?: number;
+        fairways_in_regulation?: number;
+        course_rating?: number;
+        course_slope?: number;
+        yardage?: number;
+        par?: string;
+        putts?: number;
+    } | null;
 }
 
-export default function LastGolfRoundWidget() {
-    const [round, setRound] = useState<GolfRound | null>(null);
-
-    useEffect(() => {
-        axios
-            .get("/api/golf/last")
-            .then((res) => {
-                if (res.data) setRound(res.data);
-            })
-            .catch(() => setRound(null));
-    }, []);
-
+export default function GolfRoundSummaryCard({
+    title,
+    round,
+}: GolfRoundSummaryProps) {
     const overUnder =
-        round?.par && round?.score ? round.score - parseInt(round.par) : null;
+        round?.par && round?.score
+            ? parseInt(round.score.toString()) - parseInt(round.par.toString())
+            : null;
 
     const { text: overUnderText, style: badgeStyle } =
         getOverUnderStyleAndText(overUnder);
 
     return (
         <div className="bg-white shadow-md rounded p-4 mb-6 border-l-4 border-lifeTrack-primary">
-            <h3 className="text-sm text-gray-500 mb-1">Last Round</h3>
+            <h3 className="text-sm text-gray-500 mb-1">{title}</h3>
             {!round ? (
-                <p className="text-gray-400 italic text-sm">
-                    No rounds logged yet
-                </p>
+                <p className="text-gray-400 italic text-sm">No rounds yet</p>
             ) : (
                 <div className="space-y-1 text-sm text-gray-700">
                     <p>
@@ -88,13 +80,13 @@ export default function LastGolfRoundWidget() {
                             {round.putts}
                         </p>
                     )}
-                    {round.course_rating && (
+                    {round.course_rating !== undefined && (
                         <p>
                             <span className="font-semibold">Rating:</span>{" "}
                             {round.course_rating}
                         </p>
                     )}
-                    {round.course_slope && (
+                    {round.course_slope !== undefined && (
                         <p>
                             <span className="font-semibold">Slope:</span>{" "}
                             {round.course_slope}

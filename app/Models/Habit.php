@@ -23,4 +23,3 @@ class Habit extends Model
         return $this->belongsTo(User::class);
     }
 }
-

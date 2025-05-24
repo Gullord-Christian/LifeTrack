@@ -10,12 +10,14 @@ export default function GolfLog({
 }) {
     const [form, setForm] = useState<GolfEntry>({
         date: "",
-        score: "",
+        score: 0,
         course: "",
-        greensInReg: "",
-        fairwaysInReg: "",
-        rating: "",
-        slope: "",
+        par: "",
+        greens_in_regulation: "",
+        fairways_in_regulation: "",
+        putts: "",
+        course_rating: "",
+        course_slope: "",
         yardage: "",
         notes: "",
     });
@@ -54,6 +56,14 @@ export default function GolfLog({
                     placeholder="Course"
                 />
                 <input
+                    type="number"
+                    name="par"
+                    value={form.par}
+                    onChange={handleChange}
+                    className="border px-3 py-2 rounded"
+                    placeholder="Par"
+                />
+                <input
                     name="score"
                     type="number"
                     value={form.score}
@@ -62,26 +72,34 @@ export default function GolfLog({
                     placeholder="Score"
                 />
                 <input
-                    name="greensInReg"
+                    name="greens_in_regulation"
                     type="number"
-                    value={form.greensInReg}
+                    value={form.greens_in_regulation}
                     onChange={handleChange}
                     className="border px-3 py-2 rounded"
                     placeholder="GIR (0–18)"
                 />
                 <input
-                    name="fairwaysInReg"
+                    name="fairways_in_regulation"
                     type="number"
-                    value={form.fairwaysInReg}
+                    value={form.fairways_in_regulation}
                     onChange={handleChange}
                     className="border px-3 py-2 rounded"
                     placeholder="FIR (0–14)"
                 />
                 <input
+                    name="putts"
+                    type="number"
+                    value={form.putts}
+                    onChange={handleChange}
+                    className="border px-3 py-2 rounded"
+                    placeholder="Putts"
+                />
+                <input
                     name="rating"
                     type="number"
                     step="0.1"
-                    value={form.rating}
+                    value={form.course_rating}
                     onChange={handleChange}
                     className="border px-3 py-2 rounded"
                     placeholder="Rating"
@@ -89,7 +107,7 @@ export default function GolfLog({
                 <input
                     name="slope"
                     type="number"
-                    value={form.slope}
+                    value={form.course_slope}
                     onChange={handleChange}
                     className="border px-3 py-2 rounded"
                     placeholder="Slope"

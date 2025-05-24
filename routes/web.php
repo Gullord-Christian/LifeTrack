@@ -5,13 +5,12 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-
 Route::get('/', function () {
-        return Inertia::render('Home', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
+    return Inertia::render('Home', [
+    'canLogin' => Route::has('login'),
+    'canRegister' => Route::has('register'),
+    'laravelVersion' => Application::VERSION,
+    'phpVersion' => PHP_VERSION,
     ]);
 });
 
@@ -26,7 +25,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    
+
     Route::get('/', function () {
         return Inertia::render('Dashboard/Dashboard');
     })->name('dashboard');
@@ -67,10 +66,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('job-tracking');
 
     Route::get('/project-overview', function () {
-    return Inertia::render('Project/ProjectOverview');
-    })->name('project-overview');   
-
-    
+        return Inertia::render('Project/ProjectOverview');
+    })->name('project-overview');
 
 });
 

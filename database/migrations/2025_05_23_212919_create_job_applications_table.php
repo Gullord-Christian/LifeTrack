@@ -10,13 +10,13 @@ return new class () extends Migration {
      */
     public function up(): void
     {
-        Schema::create('runs', function (Blueprint $table) {
+        Schema::create('job_applications', function (Blueprint $table) {
             $table->id();
-            $table->date('date');
-            $table->unsignedInteger('duration_minutes');
-            $table->unsignedInteger('duration_seconds');
-            $table->decimal('distance', 5, 2);
-            $table->unsignedInteger('avg_hr')->nullable();
+            $table->string('company');
+            $table->string('title');
+            $table->string('location');
+            $table->date('applied_date');
+            $table->enum('status', ['Applied', 'Interviewing', 'Offer', 'Rejected', 'Accepted']);
             $table->text('notes')->nullable();
             $table->timestamps();
         });
@@ -27,6 +27,6 @@ return new class () extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('runs');
+        Schema::dropIfExists('job_applications');
     }
 };

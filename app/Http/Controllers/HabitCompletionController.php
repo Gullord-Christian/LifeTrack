@@ -1,9 +1,10 @@
 <?php
+
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Habit;
 use App\Models\HabitCompletion;
+use Illuminate\Http\Request;
 
 class HabitCompletionController extends Controller
 {

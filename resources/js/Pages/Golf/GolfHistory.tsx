@@ -35,8 +35,10 @@ export default function GolfHistory({
                 <thead className="bg-gray-100 text-left">
                     <tr>
                         <th className="p-2 border">Date</th>
-                        <th className="p-2 border">Score</th>
                         <th className="p-2 border">Course</th>
+                        <th className="p-2 border">Par</th>
+                        <th className="p-2 border">Score</th>
+                        <th className="p-2 border">Over/Under</th>
                         <th className="p-2 border">GIR</th>
                         <th className="p-2 border">FIR</th>
                         <th className="p-2 border">Rating</th>
@@ -50,18 +52,24 @@ export default function GolfHistory({
                     {rounds.map((round) => (
                         <tr key={round.id} className="border-t">
                             <td className="p-2 border">{round.date}</td>
-                            <td className="p-2 border">{round.score}</td>
                             <td className="p-2 border">{round.course}</td>
+                            <td className="p-2 border">{round.par}</td>
+                            <td className="p-2 border">{round.score}</td>
                             <td className="p-2 border">
-                                {round.greensInReg || "-"}
+                                +{round.strokes_over_par}
                             </td>
                             <td className="p-2 border">
-                                {round.fairwaysInReg || "-"}
+                                {round.greens_in_regulation || "-"}
                             </td>
                             <td className="p-2 border">
-                                {round.rating || "-"}
+                                {round.fairways_in_regulation || "-"}
                             </td>
-                            <td className="p-2 border">{round.slope || "-"}</td>
+                            <td className="p-2 border">
+                                {round.course_rating || "-"}
+                            </td>
+                            <td className="p-2 border">
+                                {round.course_slope || "-"}
+                            </td>
                             <td className="p-2 border">
                                 {round.yardage || "-"}
                             </td>

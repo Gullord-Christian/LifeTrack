@@ -1,8 +1,9 @@
 <?php
+
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\BudgetEntry;
+use Illuminate\Http\Request;
 
 class BudgetEntryController extends Controller
 {

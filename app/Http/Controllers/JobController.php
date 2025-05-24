@@ -15,13 +15,13 @@ class JobController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'company' => 'required|string|max:255',
-            'title' => 'required|string|max:255',
-            'location' => 'required|string|max:255',
-            'applied_date' => 'required|date',
-            'status' => 'required|in:Applied,Interviewing,Offer,Rejected,Accepted',
-            'notes' => 'nullable|string',
-        ]);
+                    'company' => 'required|string|max:255',
+                     'title' => 'required|string|max:255',
+                    'location' => 'required|string|max:255',
+                    'applied_date' => 'required|date',
+                    'status' => 'required|in:Applied,Interviewing,Offer,Rejected,Accepted',
+                    'notes' => 'nullable|string',
+                    ]);
 
         $job = Job::create($validated);
 

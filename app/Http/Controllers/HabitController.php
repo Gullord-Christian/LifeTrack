@@ -2,40 +2,36 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Habit;
-use App\Models\HabitCompletion;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 class HabitController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-     public function index()
+    public function index()
     {
-        $habits = Habit::with('completions')->get(); 
-
+        $habits = Habit::with('completions')->get();
 
         return inertia('/Habits/Habits', compact('habits'));
     }
 
-public function store(Request $request)
-{
-    $data = $request->validate([
-        'name' => 'required|string|max:255',
-        'frequency' => 'required|in:daily,weekly',
-        'start_date' => 'required|date',
-        'notes' => 'nullable|string',
-    ]);
+    public function store(Request $request)
+    {
+        $data = $request->validate([
+            'name' => 'required|string|max:255',
+            'frequency' => 'required|in:daily,weekly',
+            'start_date' => 'required|date',
+            'notes' => 'nullable|string',
+        ]);
 
-    $data['user_id'] = 2; // TEMP: hardcode for testing
+        $data['user_id'] = 2; // TEMP: hardcode for testing
 
-    Habit::create($data);
+        Habit::create($data);
 
-    return response()->json(['message' => 'Habit created.'], 201);
-}
-
+        return response()->json(['message' => 'Habit created.'], 201);
+    }
 
     public function show(string $id)
     {

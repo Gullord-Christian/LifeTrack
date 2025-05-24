@@ -6,7 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class GolfRound extends Model
 {
-      protected $fillable = [
+    protected $appends = ['strokes_over_par'];
+
+    protected $fillable = [
         'date',
         'course',
         'score',
@@ -16,5 +18,13 @@ class GolfRound extends Model
         'course_rating',
         'course_slope',
         'yardage',
+        'par',
+        'putts'
     ];
+
+    public function getStrokesOverParAttribute()
+    {
+        return $this->par ? $this->score - $this->par : null;
+    }
+
 }

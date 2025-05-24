@@ -3,19 +3,17 @@ import { Head } from "@inertiajs/react";
 import { useState, useEffect } from "react";
 import { PlusCircle } from "lucide-react";
 import Modal from "@/Components/Modal";
-
+import GolfRoundSummaryCard from "./GolfRoundSummaryCard";
 import api from "@/lib/api";
 import GolfLogger from "./GolfLog";
 import GolfHistory from "./GolfHistory";
-import { GolfEntry } from "./GolfUtils";
+import { getGolfPB, GolfEntry, getLastGolfRound } from "./GolfUtils";
 import LastGolfRoundWidget from "./LastGolfRoundWidget";
 import GolfPBCard from "./GolfPBCard";
 
 export default function GolfPage() {
     const [showModal, setShowModal] = useState(false);
     const [rounds, setRounds] = useState<GolfEntry[]>([]);
-    const [showDeleteModal, setShowDeleteModal] = useState(false);
-    const [deleteID, setDeleteID] = useState<number | null>(null);
 
     const addRound = (round: GolfEntry) => {
         api.post("/golf", round).then((res) => {
@@ -66,7 +64,7 @@ export default function GolfPage() {
                 </Modal>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
                     <LastGolfRoundWidget />
-                    <GolfPBCard round={null} />
+                    <GolfPBCard round={getGolfPB(rounds)} />
                 </div>
 
                 <GolfHistory rounds={rounds} onDelete={handleDelete} />

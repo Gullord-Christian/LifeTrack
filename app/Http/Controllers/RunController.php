@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Run;
+use Illuminate\Http\Request;
 
 class RunController extends Controller
 {
@@ -11,7 +11,7 @@ class RunController extends Controller
     {
         $runs = Run::orderByDesc('date')
                 ->get()
-                ->map(fn($run) => $this->formatRun($run));
+                ->map(fn ($run) => $this->formatRun($run));
 
         return response()->json($runs);
     }
@@ -22,7 +22,6 @@ class RunController extends Controller
 
         return response()->json($run);
     }
-
 
     public function store(Request $request)
     {
