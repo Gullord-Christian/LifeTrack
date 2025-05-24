@@ -36,14 +36,14 @@ export function getOverUnderStyleAndText(overUnder: number | null): {
 
     if (overUnder > 0) {
         return {
-            text: `+${overUnder} over par`,
+            text: `+${overUnder}`,
             style: "text-red-600 font-semibold",
         };
     }
 
     if (overUnder < 0) {
         return {
-            text: `${overUnder} under par`,
+            text: `${overUnder}`,
             style: "text-green-600 font-semibold",
         };
     }

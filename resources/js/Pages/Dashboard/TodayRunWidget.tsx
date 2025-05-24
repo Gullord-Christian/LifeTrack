@@ -49,8 +49,10 @@ export default function TodayRunWidget() {
     const hrZone = run.avg_hr ? getZone(run.avg_hr) : null;
 
     return (
-        <div className="bg-white shadow-md rounded p-4 mb-6 border-l-4 border-lifeTrack-primary">
-            <h3 className="text-sm text-gray-500 mb-1">Last Run</h3>
+        <div className="bg-white shadow-md rounded p-8 mb-6 border-l-4 border-lifeTrack-primary">
+            <h3 className="text-sm text-gray-500 mb-2 font-semibold border-b pb-1">
+                Last Run
+            </h3>
             <div className="space-y-1 text-sm">
                 <p>
                     <span className="font-semibold">Date:</span> {run.date}

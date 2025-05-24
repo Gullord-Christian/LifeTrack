@@ -32,6 +32,32 @@ export default function GolfPage() {
         });
     }, []);
 
+    function parseGolfEntryToRound(entry: GolfEntry | null) {
+        if (!entry) return null;
+
+        return {
+            ...entry,
+            score: parseInt(entry.score.toString()),
+            par: entry.par?.toString(),
+            greens_in_regulation: entry.greens_in_regulation
+                ? parseInt(entry.greens_in_regulation.toString())
+                : undefined,
+            fairways_in_regulation: entry.fairways_in_regulation
+                ? parseInt(entry.fairways_in_regulation.toString())
+                : undefined,
+            course_rating: entry.course_rating
+                ? parseFloat(entry.course_rating.toString())
+                : undefined,
+            course_slope: entry.course_slope
+                ? parseInt(entry.course_slope.toString())
+                : undefined,
+            yardage: entry.yardage
+                ? parseInt(entry.yardage.toString())
+                : undefined,
+            putts: entry.putts ? parseInt(entry.putts.toString()) : undefined,
+        };
+    }
+
     return (
         <AuthenticatedLayout>
             <Head title="Golf Tracker" />
@@ -63,8 +89,14 @@ export default function GolfPage() {
                     />
                 </Modal>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-                    <LastGolfRoundWidget />
-                    <GolfPBCard round={getGolfPB(rounds)} />
+                    <GolfRoundSummaryCard
+                        title="Last Round"
+                        round={parseGolfEntryToRound(getLastGolfRound(rounds))}
+                    />
+                    <GolfRoundSummaryCard
+                        title="Personal Best"
+                        round={parseGolfEntryToRound(getGolfPB(rounds))}
+                    />
                 </div>
 
                 <GolfHistory rounds={rounds} onDelete={handleDelete} />
