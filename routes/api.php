@@ -5,6 +5,9 @@ use App\Http\Controllers\BudgetEntryController;
 use App\Http\Controllers\GolfRoundController;
 use App\Http\Controllers\HabitCompletionController;
 use App\Http\Controllers\HabitController;
+use App\Http\Controllers\JobController;
+use App\Http\Controllers\RunImportController;
+
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Http;
 use App\Models\Run;
@@ -45,3 +48,10 @@ Route::delete('/budget/{budgetEntry}', [BudgetEntryController::class, 'destroy']
 Route::resource('habits', HabitController::class);
 Route::post('/habits/{habit}/complete', [HabitCompletionController::class, 'store']);
 Route::delete('/habits/{habit}/complete', [HabitCompletionController::class, 'destroy'])->name('habits.uncomplete');
+
+// Jobs
+Route::get('/jobs', [JobController::class, 'index']);
+Route::post('/jobs', [JobController::class, 'store']);
+
+// Run Import
+Route::post('/runs/import', [RunImportController::class, 'import']);

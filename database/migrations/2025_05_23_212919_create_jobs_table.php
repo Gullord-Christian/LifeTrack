@@ -11,10 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('jobs', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });
+         Schema::create('jobs', function (Blueprint $table) {
+        $table->id();
+        $table->string('company');
+        $table->string('title');
+        $table->string('location');
+        $table->date('applied_date');
+        $table->enum('status', ['Applied', 'Interviewing', 'Offer', 'Rejected', 'Accepted']);
+        $table->text('notes')->nullable();
+        $table->timestamps();
+    });
     }
 
     /**

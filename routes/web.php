@@ -32,10 +32,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('dashboard');
 
     Route::prefix('active')->name('active.')->group(function () {
-        Route::get('/', fn () => Inertia::render('Trackers/Active/Index'))->name('index');
-        Route::get('/lifting', fn () => Inertia::render('Trackers/Active/Lifting'))->name('lifting');
-        Route::get('/running', fn () => Inertia::render('Trackers/Active/Running'))->name('running');
-        Route::get('/basketball', fn () => Inertia::render('Trackers/Active/Basketball'))->name('basketball');
+        Route::get('/', fn () => Inertia::render('Active/Index'))->name('index');
+        Route::get('/lifting', fn () => Inertia::render('Active/Lifting'))->name('lifting');
+        Route::get('/running', fn () => Inertia::render('Active/Running'))->name('running');
+        Route::get('/basketball', fn () => Inertia::render('Active/Basketball'))->name('basketball');
     });
 
     Route::get('/golf', function () {
@@ -47,7 +47,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('budgeting');
 
     Route::get('/sleep', function () {
-        return Inertia::render('Trackers/Sleep');
+        return Inertia::render('Sleep/Sleep');
     })->name('sleep');
 
     Route::get('/habits', function () {
@@ -55,15 +55,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('habits');
 
     Route::get('/calendar', function () {
-        return Inertia::render('Trackers/Calendar');
+        return Inertia::render('Calendar/Calendar');
     })->name('calendar');
 
     Route::get('/notes', function () {
-        return Inertia::render('Trackers/Notes');
+        return Inertia::render('Notes-Journal/Notes');
     })->name('notes');
 
     Route::get('/job-tracking', function () {
-        return Inertia::render('Trackers/JobTracking');
+        return Inertia::render('Jobs/JobTracking');
     })->name('job-tracking');
 
     Route::get('/project-overview', function () {

@@ -2,17 +2,69 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
 import RunLogger from "./RunLogger";
 import { useState, useEffect } from "react";
-import { PlusCircle } from "lucide-react";
+import { PlusCircle, Upload } from "lucide-react";
 import Modal from "@/Components/Modal";
 import RunningPR from "./RunningPR";
 import RunHistory from "./RunHistory";
 import { RunEntry } from "./Utils/RunUtils";
 import { getMileageSummary } from "./Utils/RunUtils";
-
 import api from "@/lib/api";
+import axios from "axios";
+
+function FileUploadModal({
+    show,
+    onClose,
+    onUpload,
+}: {
+    show: boolean;
+    onClose: () => void;
+    onUpload: (file: File) => void;
+}) {
+    const [error, setError] = useState<string | null>(null);
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        if (!file.name.endsWith(".csv")) {
+            setError("Please upload a valid .csv file.");
+            return;
+        }
+
+        setError(null);
+        onUpload(file);
+        onClose();
+    };
+
+    return (
+        <Modal show={show} onClose={onClose} maxWidth="sm">
+            <div className="p-6">
+                <h2 className="text-lg font-bold mb-4">
+                    📤 Import Runs from CSV
+                </h2>
+                <input
+                    type="file"
+                    accept=".csv"
+                    onChange={handleChange}
+                    className="block w-full border rounded p-2"
+                />
+                {error && <p className="mt-2 text-sm text-red-500">{error}</p>}
+                <div className="mt-4 flex justify-end">
+                    <button
+                        onClick={onClose}
+                        className="text-gray-500 text-sm hover:underline"
+                    >
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </Modal>
+    );
+}
 
 export default function Running() {
     const [showModal, setShowModal] = useState(false);
+    const [showUploadModal, setShowUploadModal] = useState(false);
     const [runs, setRuns] = useState<RunEntry[]>([]);
 
     const mileage = getMileageSummary(runs);
@@ -23,12 +75,35 @@ export default function Running() {
         });
     };
 
-    useEffect(() => {
+    const refreshRuns = () => {
         api.get("/runs").then((res) => {
             setRuns(res.data);
         });
+    };
+
+    useEffect(() => {
+        refreshRuns();
     }, []);
 
+    const handleUpload = async (file: File) => {
+        const formData = new FormData();
+        formData.append("file", file);
+
+        try {
+            const res = await axios.post("/runs/import", formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                    Accept: "application/json",
+                },
+            });
+
+            alert("File uploaded!");
+            // optionally refresh your run list
+        } catch (error) {
+            console.error(error);
+            alert("Upload failed.");
+        }
+    };
     const handleDelete = async (id: number) => {
         try {
             await api.delete(`/runs/${id}`);
@@ -46,7 +121,6 @@ export default function Running() {
                 {/* Header */}
                 <div className="mb-6">
                     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-                        {/* Left: Title + Subtext */}
                         <div>
                             <h1 className="text-2xl font-bold">
                                 Running Tracker
@@ -56,14 +130,20 @@ export default function Running() {
                             </p>
                         </div>
 
-                        {/* Right: Add Button */}
-                        <div>
+                        <div className="flex gap-2">
                             <button
                                 onClick={() => setShowModal(true)}
                                 className="flex items-center gap-2 bg-lifeTrack-dark text-white px-4 py-2 rounded hover:bg-lifeTrack-light hover:text-lifeTrack-dark transition"
                             >
                                 <PlusCircle className="w-5 h-5" />
                                 Add Run
+                            </button>
+                            <button
+                                onClick={() => setShowUploadModal(true)}
+                                className="flex items-center gap-2 bg-green-700 text-white px-4 py-2 rounded hover:bg-green-600 transition"
+                            >
+                                <Upload className="w-5 h-5" />
+                                Import CSV
                             </button>
                         </div>
                     </div>
@@ -100,7 +180,7 @@ export default function Running() {
                 {/* PR boxes */}
                 <RunningPR runs={runs} />
 
-                {/* Modal */}
+                {/* Run Logger Modal */}
                 <Modal
                     show={showModal}
                     onClose={() => setShowModal(false)}
@@ -111,6 +191,13 @@ export default function Running() {
                         onSave={addRun}
                     />
                 </Modal>
+
+                {/* File Upload Modal */}
+                <FileUploadModal
+                    show={showUploadModal}
+                    onClose={() => setShowUploadModal(false)}
+                    onUpload={handleUpload}
+                />
 
                 {/* History */}
                 <RunHistory runs={runs} onDelete={handleDelete} />

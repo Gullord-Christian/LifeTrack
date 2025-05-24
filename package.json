@@ -27,6 +27,7 @@
     },
     "dependencies": {
         "lucide-react": "^0.511.0",
+        "react-hot-toast": "^2.5.2",
         "recharts": "^2.15.3"
     }
 }

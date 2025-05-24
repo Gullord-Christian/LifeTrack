@@ -5,7 +5,7 @@ import {
     formatPaceDisplay,
     getZone,
     getTotalMinutes,
-} from "../Trackers/Active/Utils/RunUtils";
+} from "../Active/Utils/RunUtils";
 
 interface BackendRun {
     id: number;
