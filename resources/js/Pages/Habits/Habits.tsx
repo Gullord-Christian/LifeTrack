@@ -35,7 +35,7 @@ export default function Habits() {
             <Head title="Habits Tracker" />
             <div className="max-w-4xl mx-auto px-4 py-6">
                 <div className="flex justify-between items-center mb-6">
-                    <h1 className="text-2xl font-bold">🧠 Habits Tracker</h1>
+                    <h1 className="text-2xl font-bold">Habits Tracker</h1>
                     <button
                         onClick={() => setShowForm(true)}
                         className="bg-lifeTrack-dark text-white px-4 py-2 rounded hover:bg-lifeTrack-primary transition"
@@ -65,23 +65,27 @@ export default function Habits() {
                 </div>
 
                 {/* Weekly Grid */}
-                <WeeklyHabitGrid habits={habits} />
+                <WeeklyHabitGrid habits={habits} onRefresh={fetchHabits} />
 
                 {/* Habit Cards */}
                 {Array.isArray(habits) && habits.length === 0 ? (
-                    <p className="text-gray-600 italic">
+                    <div className="mt-10 text-center text-gray-600 italic">
                         No habits yet. Start building your routine!
-                    </p>
+                    </div>
                 ) : Array.isArray(habits) ? (
                     <div className="space-y-3 mt-6">
                         {habits.map((habit) => (
-                            <HabitCard key={habit.id} habit={habit} />
+                            <HabitCard
+                                key={habit.id}
+                                habit={habit}
+                                onDelete={fetchHabits}
+                            />
                         ))}
                     </div>
                 ) : (
-                    <p className="text-red-500 text-sm">
-                        ⚠️ Unable to load habits.
-                    </p>
+                    <div className="mt-10 text-center text-red-500 text-sm">
+                        Unable to load habits.
+                    </div>
                 )}
 
                 {/* Habit Form */}
@@ -93,7 +97,7 @@ export default function Habits() {
                         <HabitForm
                             onClose={() => {
                                 setShowForm(false);
-                                fetchHabits(); // ✅ refresh habits after add
+                                fetchHabits();
                             }}
                         />
                     </div>

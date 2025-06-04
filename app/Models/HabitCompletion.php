@@ -6,11 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class HabitCompletion extends Model
 {
-    protected $fillable = [
-        'habit_id', 'completed_at', 'note',
-    ];
+    protected $fillable = ['habit_id', 'completed_date', 'note'];
 
-    protected $dates = ['completed_at'];
+    protected $dates = ['completed_date'];
+
 
     public function habit()
     {

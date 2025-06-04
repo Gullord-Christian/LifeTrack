@@ -10,12 +10,12 @@ class HabitController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function apiIndex()
     {
         $habits = Habit::with('completions')->get();
-
-        return inertia('/Habits/Habits', compact('habits'));
+        return response()->json($habits);
     }
+
 
     public function store(Request $request)
     {
@@ -24,9 +24,10 @@ class HabitController extends Controller
             'frequency' => 'required|in:daily,weekly',
             'start_date' => 'required|date',
             'notes' => 'nullable|string',
+            'weekly_target' => 'nullable|integer|min:1|max:7',
         ]);
 
-        $data['user_id'] = 2; // TEMP: hardcode for testing
+        $data['user_id'] = 1; // TEMP: hardcode for testing
 
         Habit::create($data);
 

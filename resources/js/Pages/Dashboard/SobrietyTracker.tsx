@@ -8,8 +8,8 @@ export default function SobrietyTracker() {
     const [sobrietyDates, setSobrietyDates] = useState<Record<string, string>>({
         alcohol: "2025-05-13",
         adderall: "2025-05-11",
-        weed: "2025-05-22",
-        caffeine: "2025-05-23",
+        weed: "2025-06-03",
+        caffeine: "2025-06-03",
     });
     const [habitToReset, setHabitToReset] = useState<string | null>(null);
     const [showModal, setShowModal] = useState(false);

@@ -7,8 +7,6 @@ use App\Http\Controllers\HabitController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\RunController;
 use App\Http\Controllers\RunImportController;
-
-use App\Models\Run;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 
@@ -39,7 +37,8 @@ Route::post('/budget', [BudgetEntryController::class, 'store']);
 Route::delete('/budget/{budgetEntry}', [BudgetEntryController::class, 'destroy']);
 
 // Habits
-Route::resource('habits', HabitController::class);
+Route::get('/habits', [HabitController::class, 'apiIndex']);
+Route::post('/habits', [HabitController::class, 'store']);
 Route::post('/habits/{habit}/complete', [HabitCompletionController::class, 'store']);
 Route::delete('/habits/{habit}/complete', [HabitCompletionController::class, 'destroy'])->name('habits.uncomplete');
 

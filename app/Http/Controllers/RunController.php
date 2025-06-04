@@ -18,8 +18,8 @@ class RunController extends Controller
 
     public function yesterday()
     {
-        $run = Run::whereDate('date', now()->subDay()->toDateString())->first();
-
+        $run = Run::orderByDesc('date')->first();
+        debug($run);
         return response()->json($run);
     }
 

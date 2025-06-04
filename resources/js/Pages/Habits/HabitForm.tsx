@@ -8,6 +8,7 @@ export default function HabitForm({ onClose }: { onClose: () => void }) {
         notes: "",
         frequency: "daily",
         start_date: new Date().toISOString().slice(0, 10), // today's date
+        weekly_target: "",
     });
 
     const handleChange = (
@@ -29,6 +30,7 @@ export default function HabitForm({ onClose }: { onClose: () => void }) {
                 notes: "",
                 frequency: "daily",
                 start_date: new Date().toISOString().slice(0, 10),
+                weekly_target: "",
             });
             onClose();
         } catch (error) {
@@ -79,6 +81,25 @@ export default function HabitForm({ onClose }: { onClose: () => void }) {
                     <option value="weekly">Weekly</option>
                 </select>
             </div>
+
+            {/* Only show this if "weekly" is selected */}
+            {form.frequency === "weekly" && (
+                <div>
+                    <label className="block text-sm font-medium text-gray-700">
+                        Weekly Target (1–7)
+                    </label>
+                    <input
+                        type="number"
+                        name="weekly_target"
+                        min={1}
+                        max={7}
+                        value={form.weekly_target}
+                        onChange={handleChange}
+                        className="mt-1 block w-full border border-gray-300 rounded px-3 py-2"
+                        required
+                    />
+                </div>
+            )}
 
             <div>
                 <label className="block text-sm font-medium text-gray-700">

@@ -14,12 +14,12 @@ class HabitCompletionController extends Controller
             'completed_date' => 'required|date',
         ]);
 
-        HabitCompletion::firstOrCreate([
+        $completion = HabitCompletion::firstOrCreate([
             'habit_id' => $habit->id,
             'completed_date' => $request->completed_date,
         ]);
 
-        return back();
+        return response()->json($completion, 201);
     }
 
     public function destroy(Request $request, Habit $habit)
@@ -32,6 +32,7 @@ class HabitCompletionController extends Controller
             ->where('completed_date', $request->completed_date)
             ->delete();
 
-        return back();
+        return response()->json(['message' => 'Uncompleted'], 204);
     }
+
 }

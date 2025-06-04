@@ -8,8 +8,10 @@ class Habit extends Model
 {
     protected $fillable = [
         'user_id', 'name', 'notes', 'frequency', 'start_date',
-        'streak', 'last_completed_at', 'archived_at',
+        'streak', 'last_completed_at', 'archived_at', 'weekly_target',
     ];
+
+
 
     protected $dates = ['start_date', 'last_completed_at', 'archived_at'];
 

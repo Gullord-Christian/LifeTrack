@@ -1,12 +1,15 @@
-import { router } from "@inertiajs/react";
 import { Habit } from "./HabitUtils";
 import { useMemo } from "react";
+import axios from "axios";
+import { toast } from "react-hot-toast";
+import { getWeeklyCompletions } from "./HabitUtils";
 
 interface Props {
     habits: Habit[];
+    onRefresh: () => void;
 }
 
-export default function WeeklyHabitGrid({ habits }: Props) {
+export default function WeeklyHabitGrid({ habits, onRefresh }: Props) {
     const startOfWeek = useMemo(() => {
         const now = new Date();
         const day = now.getDay(); // 0 (Sun) to 6 (Sat)
@@ -19,17 +22,27 @@ export default function WeeklyHabitGrid({ habits }: Props) {
         });
     }, []);
 
-    const handleToggle = (habitID: number, date: Date, isChecked: boolean) => {
+    const handleToggle = async (
+        habitID: number,
+        date: Date,
+        isChecked: boolean
+    ) => {
         const dateStr = date.toISOString().slice(0, 10);
 
-        if (isChecked) {
-            router.post(`/habits/${habitID}/complete`, {
-                completed_date: dateStr,
-            });
-        } else {
-            router.delete(`/habits/${habitID}/complete`, {
-                data: { completed_date: dateStr },
-            });
+        try {
+            if (isChecked) {
+                await axios.post(`/api/habits/${habitID}/complete`, {
+                    completed_date: dateStr,
+                });
+            } else {
+                await axios.delete(`/api/habits/${habitID}/complete`, {
+                    data: { completed_date: dateStr },
+                });
+            }
+
+            onRefresh();
+        } catch (error) {
+            console.error("Habit toggle failed:", error);
         }
     };
 
@@ -57,40 +70,86 @@ export default function WeeklyHabitGrid({ habits }: Props) {
                 </thead>
                 <tbody>
                     {Array.isArray(habits) ? (
-                        habits.map((habit) => (
-                            <tr key={habit.id}>
-                                <td className="p-2 border font-medium">
-                                    {habit.name}
-                                </td>
-                                {startOfWeek.map((date) => {
-                                    const dateStr = date
-                                        .toISOString()
-                                        .slice(0, 10);
-                                    const isChecked = habit.completions?.some(
-                                        (c) => c.completed_date === dateStr
-                                    );
+                        habits.map((habit) => {
+                            const completionsThisWeek = getWeeklyCompletions(
+                                habit,
+                                startOfWeek
+                            );
 
-                                    return (
-                                        <td
-                                            key={dateStr}
-                                            className="p-2 border text-center"
-                                        >
-                                            <input
-                                                type="checkbox"
-                                                checked={!!isChecked}
-                                                onChange={(e) =>
-                                                    handleToggle(
-                                                        habit.id,
-                                                        date,
-                                                        e.target.checked
-                                                    )
-                                                }
-                                            />
-                                        </td>
-                                    );
-                                })}
-                            </tr>
-                        ))
+                            const isWeeklyComplete =
+                                habit.frequency === "weekly" &&
+                                habit.weekly_target &&
+                                completionsThisWeek >= habit.weekly_target;
+
+                            return (
+                                <tr
+                                    key={habit.id}
+                                    className={`transition-all duration-300 ${
+                                        isWeeklyComplete
+                                            ? "bg-green-50 text-gray-500 line-through"
+                                            : ""
+                                    }`}
+                                >
+                                    <td className="p-2 border font-medium">
+                                        <div className="flex flex-col gap-1">
+                                            <div className="flex flex-col items-center gap-2">
+                                                {habit.name}
+                                            </div>
+                                        </div>
+                                    </td>
+
+                                    {startOfWeek.map((date) => {
+                                        const dateStr = date
+                                            .toISOString()
+                                            .slice(0, 10);
+                                        const isChecked =
+                                            habit.completions?.some(
+                                                (c) =>
+                                                    c.completed_date === dateStr
+                                            );
+
+                                        return (
+                                            <td
+                                                key={dateStr}
+                                                className="p-2 border text-center"
+                                            >
+                                                <input
+                                                    type="checkbox"
+                                                    checked={!!isChecked}
+                                                    onChange={async (e) => {
+                                                        await handleToggle(
+                                                            habit.id,
+                                                            date,
+                                                            e.target.checked
+                                                        );
+
+                                                        // Show toast if target just hit
+                                                        const newCount =
+                                                            isChecked
+                                                                ? completionsThisWeek -
+                                                                  1
+                                                                : completionsThisWeek +
+                                                                  1;
+
+                                                        if (
+                                                            habit.frequency ===
+                                                                "weekly" &&
+                                                            habit.weekly_target &&
+                                                            newCount ===
+                                                                habit.weekly_target
+                                                        ) {
+                                                            toast.success(
+                                                                `"${habit.name}" goal completed for the week!`
+                                                            );
+                                                        }
+                                                    }}
+                                                />
+                                            </td>
+                                        );
+                                    })}
+                                </tr>
+                            );
+                        })
                     ) : (
                         <tr>
                             <td
