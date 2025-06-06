@@ -9,7 +9,7 @@ class GolfRoundController extends Controller
 {
     public function index()
     {
-        return \App\Models\GolfRound::orderByDesc('date')->get();
+        return GolfRound::orderByDesc('date')->get();
     }
 
     public function last()

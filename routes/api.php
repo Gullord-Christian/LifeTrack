@@ -4,6 +4,7 @@ use App\Http\Controllers\BudgetEntryController;
 use App\Http\Controllers\GolfRoundController;
 use App\Http\Controllers\HabitCompletionController;
 use App\Http\Controllers\DailyReflectionController;
+use App\Http\Controllers\SleepEntryController;
 use App\Http\Controllers\HabitController;
 use App\Http\Controllers\WorkoutController;
 use App\Http\Controllers\JobController;
@@ -61,3 +62,8 @@ Route::get('/workouts', [WorkoutController::class, 'index']);
 Route::post('/workouts', [WorkoutController::class, 'store']);
 Route::get('/workouts/{workout}', [WorkoutController::class, 'show']);
 Route::delete('/workouts/{workout}', [WorkoutController::class, 'destroy']);
+
+// Sleep
+Route::get('/sleep', [SleepEntryController::class, 'index']);
+Route::post('/sleep', [SleepEntryController::class, 'store']);
+Route::delete('/sleep/{sleepEntry}', [SleepEntryController::class, 'destroy']);
