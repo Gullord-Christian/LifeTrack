@@ -5,6 +5,7 @@ use App\Http\Controllers\GolfRoundController;
 use App\Http\Controllers\HabitCompletionController;
 use App\Http\Controllers\DailyReflectionController;
 use App\Http\Controllers\HabitController;
+use App\Http\Controllers\WorkoutController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\RunController;
 use App\Http\Controllers\RunImportController;
@@ -54,3 +55,9 @@ Route::post('/runs/import', [RunImportController::class, 'import']);
 
 Route::get('/daily-reflection', [DailyReflectionController::class, 'showToday']);
 Route::post('/daily-reflection', [DailyReflectionController::class, 'storeOrUpdate']);
+
+// Workouts
+Route::get('/workouts', [WorkoutController::class, 'index']);
+Route::post('/workouts', [WorkoutController::class, 'store']);
+Route::get('/workouts/{workout}', [WorkoutController::class, 'show']);
+Route::delete('/workouts/{workout}', [WorkoutController::class, 'destroy']);

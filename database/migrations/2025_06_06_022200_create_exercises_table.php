@@ -10,8 +10,12 @@ return new class () extends Migration {
      */
     public function up(): void
     {
-        Schema::table('habits', function (Blueprint $table) {
-            $table->unsignedTinyInteger('weekly_target')->nullable()->after('frequency');
+        Schema::create('exercises', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->string('category')->nullable();
+            $table->boolean('is_bodyweight')->default(false);
+            $table->timestamps();
         });
     }
 
@@ -20,8 +24,6 @@ return new class () extends Migration {
      */
     public function down(): void
     {
-        Schema::table('habits', function (Blueprint $table) {
-            $table->dropColumn('weekly_target');
-        });
+        Schema::dropIfExists('exercises');
     }
 };
