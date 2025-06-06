@@ -49,9 +49,11 @@ class HabitController extends Controller
         //
     }
 
-    public function destroy(string $id)
+    public function destroy(Habit $habit)
     {
-        Habit::findOrFail($id)->delete();
-        return redirect()->route('habits.index');
+        $habit->delete();
+
+        return response()->json(['message' => 'Habit deleted successfully.']);
     }
+
 }

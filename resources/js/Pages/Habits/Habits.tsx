@@ -26,8 +26,8 @@ export default function Habits() {
     const sobrietyDates: Record<string, string> = {
         alcohol: "2025-05-13",
         adderall: "2025-05-11",
-        weed: "2025-05-22",
-        caffeine: "2025-05-23",
+        weed: "2025-06-04",
+        caffeine: "2025-06-04",
     };
 
     return (

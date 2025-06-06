@@ -51,7 +51,7 @@ export default function WeeklyHabitGrid({ habits, onRefresh }: Props) {
             <table className="w-full table-fixed border-collapse">
                 <thead>
                     <tr>
-                        <th className="p-2 border text-left w-32">Habit</th>
+                        <th className="px-2 border text-left w-40">Habit</th>
                         {startOfWeek.map((d) => (
                             <th
                                 key={d.toDateString()}

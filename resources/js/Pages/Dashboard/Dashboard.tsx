@@ -6,6 +6,7 @@ import TodayRunWidget from "./TodayRunWidget";
 import DashboardCard from "./DashboardCard";
 import LastGolfRoundWidget from "../Golf/LastGolfRoundWidget";
 import SobrietyTracker from "./SobrietyTracker";
+import DailyAffirmationWidget from "./DailyAffirmationsWidget";
 
 export default function Dashboard() {
     return (
@@ -14,6 +15,7 @@ export default function Dashboard() {
 
             <div className="">
                 <div>{<QuoteOfTheDay />}</div>
+                <div>{<DailyAffirmationWidget />}</div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <DashboardCard className="col-span-2">
                         <SobrietyTracker />

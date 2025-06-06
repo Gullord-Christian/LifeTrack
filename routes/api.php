@@ -3,6 +3,7 @@
 use App\Http\Controllers\BudgetEntryController;
 use App\Http\Controllers\GolfRoundController;
 use App\Http\Controllers\HabitCompletionController;
+use App\Http\Controllers\DailyReflectionController;
 use App\Http\Controllers\HabitController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\RunController;
@@ -39,6 +40,8 @@ Route::delete('/budget/{budgetEntry}', [BudgetEntryController::class, 'destroy']
 // Habits
 Route::get('/habits', [HabitController::class, 'apiIndex']);
 Route::post('/habits', [HabitController::class, 'store']);
+Route::delete('/habits/{habit}', [HabitController::class, 'destroy']);
+
 Route::post('/habits/{habit}/complete', [HabitCompletionController::class, 'store']);
 Route::delete('/habits/{habit}/complete', [HabitCompletionController::class, 'destroy'])->name('habits.uncomplete');
 
@@ -48,3 +51,6 @@ Route::post('/jobs', [JobController::class, 'store']);
 
 // Run Import
 Route::post('/runs/import', [RunImportController::class, 'import']);
+
+Route::get('/daily-reflection', [DailyReflectionController::class, 'showToday']);
+Route::post('/daily-reflection', [DailyReflectionController::class, 'storeOrUpdate']);

@@ -6,6 +6,9 @@ import {
     getWeeklyCompletions,
 } from "./HabitUtils";
 import { Trash2 } from "lucide-react";
+import { useState } from "react";
+import Modal from "@/Components/Modal";
+import toast from "react-hot-toast";
 
 export default function HabitCard({
     habit,
@@ -14,6 +17,8 @@ export default function HabitCard({
     habit: Habit;
     onDelete: () => void;
 }) {
+    const [showModal, setShowModal] = useState(false);
+
     const active = isStreakActive(habit.last_completed_at, habit.frequency);
     const daysSince = getDaysSinceLastCompletion(habit.last_completed_at);
 
@@ -27,13 +32,13 @@ export default function HabitCard({
     });
 
     const handleDelete = async () => {
-        if (
-            confirm(
-                `Are you sure you want to delete the habit "${habit.name}"?`
-            )
-        ) {
+        try {
             await axios.delete(`/api/habits/${habit.id}`);
-            onDelete(); // Refresh parent
+            toast.success(`"${habit.name}" deleted`);
+            onDelete();
+            setShowModal(false);
+        } catch (err) {
+            toast.error("Failed to delete habit.");
         }
     };
 
@@ -56,16 +61,18 @@ export default function HabitCard({
                     <div className="flex gap-2">
                         <h3 className="font-semibold">{habit.name}</h3>
                         <button
-                            onClick={handleDelete}
+                            onClick={() => setShowModal(true)}
                             className=" text-red-500 hover:text-red-700"
                             title="Delete Habit"
                         >
                             <Trash2 size={16} />
                         </button>
                     </div>
-                    <p className="text-xs text-gray-500">
-                        {habit.frequency} – {habit.streak} day streak
-                    </p>
+                    {habit.notes && (
+                        <p className="font-italic text-xs mt-2">
+                            {habit.notes}
+                        </p>
+                    )}
                 </div>
 
                 <div className="w-24 h-2 rounded bg-gray-200 overflow-hidden">
@@ -75,6 +82,30 @@ export default function HabitCard({
                     />
                 </div>
             </div>
+            <Modal show={showModal} onClose={() => setShowModal(false)}>
+                <div className="p-6">
+                    <h2 className="text-lg font-semibold mb-2">Delete Habit</h2>
+                    <p className="text-sm text-gray-600 mb-4">
+                        Are you sure you want to delete the habit{" "}
+                        <span className="font-semibold">{habit.name}</span>?
+                        This action cannot be undone.
+                    </p>
+                    <div className="flex justify-end gap-2">
+                        <button
+                            onClick={() => setShowModal(false)}
+                            className="px-4 py-2 text-sm border rounded hover:bg-gray-100"
+                        >
+                            Cancel
+                        </button>
+                        <button
+                            onClick={handleDelete}
+                            className="px-4 py-2 text-sm bg-red-600 text-white rounded hover:bg-red-700"
+                        >
+                            Delete
+                        </button>
+                    </div>
+                </div>
+            </Modal>
         </div>
     );
 }
