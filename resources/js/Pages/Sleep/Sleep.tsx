@@ -28,10 +28,26 @@ export default function Sleep() {
     const [sleepData, setSleepData] = useState<SleepEntry[]>([]);
     const [showForm, setShowForm] = useState(false);
 
+    const fetchSleep = async () => {
+        try {
+            const res = await api.get("/api/sleep");
+
+            if (Array.isArray(res.data)) {
+                setSleepData(res.data);
+            } else if (res.data?.data && Array.isArray(res.data.data)) {
+                setSleepData(res.data.data);
+            } else {
+                console.error("Unexpected response:", res.data);
+                setSleepData([]);
+            }
+        } catch (error) {
+            console.error("Error fetching sleep data:", error);
+            setSleepData([]);
+        }
+    };
+
     useEffect(() => {
-        api.get("/sleep").then((res) => {
-            setSleepData(res.data);
-        });
+        fetchSleep();
     }, []);
 
     return (

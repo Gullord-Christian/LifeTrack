@@ -1,11 +1,11 @@
 import axios from "axios";
 
 const api = axios.create({
-    baseURL: "/api", // Laravel handles routing
+    baseURL: "/",
     headers: {
         "X-Requested-With": "XMLHttpRequest",
-        "Content-Type": "application/json",
     },
+    withCredentials: true,
 });
 
 export default api;

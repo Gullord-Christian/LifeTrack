@@ -10,17 +10,9 @@ class SleepEntryController extends Controller
 {
     public function index(Request $request)
     {
-        debug($request);
-        if ($request->expectsJson()) {
-            return SleepEntry::where('user_id', Auth::id())
-                ->orderByDesc('date')
-                ->get();
-        }
 
-        // For full page loads or Inertia navigation
-        return inertia('Sleep');
+        return SleepEntry::orderByDesc('date')->get();
     }
-
 
     public function store(Request $request)
     {

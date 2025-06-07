@@ -1,5 +1,3 @@
-// SleepUtils.ts
-
 export type SleepCycleType = "Awake" | "REM" | "Light" | "Deep";
 
 export interface SleepCycle {
