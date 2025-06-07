@@ -53,7 +53,7 @@ export default function TodayRunWidget() {
             <h3 className="text-sm text-gray-500 mb-2 font-semibold border-b pb-1">
                 Last Run
             </h3>
-            <div className="space-y-1 text-sm">
+            <div className="space-y-1 text-sm gap-y-1 gap-x-6">
                 <p>
                     <span className="font-semibold">Date:</span> {run.date}
                 </p>

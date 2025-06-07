@@ -10,6 +10,9 @@ use App\Http\Controllers\WorkoutController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\RunController;
 use App\Http\Controllers\RunImportController;
+use App\Http\Controllers\BudgetCategoryController;
+use App\Http\Controllers\IncomeSourceController;
+use App\Http\Controllers\DebtController;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 
@@ -67,3 +70,8 @@ Route::delete('/workouts/{workout}', [WorkoutController::class, 'destroy']);
 Route::get('/sleep', [SleepEntryController::class, 'index']);
 Route::post('/sleep', [SleepEntryController::class, 'store']);
 Route::delete('/sleep/{sleepEntry}', [SleepEntryController::class, 'destroy']);
+
+// Finance
+Route::get('/categories', [BudgetCategoryController::class, 'index']);
+Route::get('/debts', [DebtController::class, 'index']);
+Route::get('/income-sources', [IncomeSourceController::class, 'index']);

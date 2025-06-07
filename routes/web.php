@@ -42,7 +42,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('golf');
 
     Route::get('/budgeting', function () {
-        return Inertia::render('Budget/Budget');
+        return Inertia::render('Budget/BudgetDashboard');
     })->name('budgeting');
 
     Route::get('/sleep', function () {

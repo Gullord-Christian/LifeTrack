@@ -10,13 +10,10 @@ return new class () extends Migration {
      */
     public function up(): void
     {
-        Schema::create('budget_entries', function (Blueprint $table) {
+        Schema::create('income_sources', function (Blueprint $table) {
             $table->id();
-            $table->date('date');
-            $table->string('description');
-            $table->string('category');
-            $table->decimal('amount', 10, 2);
-            $table->enum('type', ['income', 'expense']);
+            $table->string('name');
+            $table->decimal('expected_amount', 10, 2)->nullable();
             $table->text('notes')->nullable();
             $table->timestamps();
         });
@@ -27,6 +24,6 @@ return new class () extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('budget_entries');
+        Schema::dropIfExists('income_sources');
     }
 };
